@@ -1,5 +1,5 @@
 
-# Soroush Messenger Bot Python Library
+# Soroush Messenger Bot Python SDK
 Soroush Messenger Bot Wrapper for Python
 
 ## Dependencies ##
@@ -12,7 +12,7 @@ Run the below commands
 ```bash
 git clone https://github.com/soroush-app/bot-python-sdk
 cd bot-python-sdk
-pip install -r requirements.text
+pip install -r requirements.txt
 ```
 
 ## Usage ##

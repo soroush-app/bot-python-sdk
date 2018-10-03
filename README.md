@@ -39,7 +39,8 @@ except Exception as e:
 
 
 ```
-More examples are in the [examples](https://github.com/soroush-app/bot-python-sdk/tree/master/examples) folder.
+"to" value in above example is chat_id of a bot user. You can find it in front of 'from' key in a message that user has sent to your bot. 
+You can see more examples in the [examples](https://github.com/soroush-app/bot-python-sdk/tree/master/examples) directory.
 
  ## Contribute ##
  Contributions to the package are always welcome!

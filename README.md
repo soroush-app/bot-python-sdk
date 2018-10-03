@@ -5,7 +5,7 @@ Soroush Messenger Bot Wrapper for Python
 ## Dependencies ##
 - Python 2.7+
 - requests 
-- sseclient
+- sseclient-py
 
 ## Installation ##
 Run the below commands

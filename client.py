@@ -217,8 +217,8 @@ class Client:
         }
 
         return self.send_message(post_data)
-
-    def make_keyboard(self, keyboard_data):
+    @staticmethod
+    def make_keyboard(keyboard_data):
         keyboard = []
 
         if isinstance(keyboard_data, str):

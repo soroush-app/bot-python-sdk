@@ -4,6 +4,6 @@
 
 __author__ = """Ali Nikneshan"""
 __email__ = 'ali@nikneshan.com'
-__version__ = '__version__ = '__version__ = '0.2.1'''
+__version__ = '0.2.1'
 
 from .soroush_python_sdk import Client

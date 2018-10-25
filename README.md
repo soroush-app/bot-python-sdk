@@ -3,9 +3,9 @@
 Soroush Messenger Bot Wrapper for Python
 ![shiled](https://img.shields.io/pypi/v/soroush_python_sdk.svg)
 ![travis](https://img.shields.io/travis/alinik/soroush_python_sdk.svg)
-![aa](https://readthedocs.org/projects/soroush-python-sdk/badge/?version=latest)
-![Documentation Status](https://soroush-python-sdk.readthedocs.io/en/latest/?badge=latest)
-![Updates](https://pyup.io/repos/github/alinik/soroush_python_sdk/shield.svg)
+![badge](https://readthedocs.org/projects/soroush-python-sdk/badge/?version=latest)
+[![Documentation Status](https://readthedocs.org/projects/bot-python-sdk/badge/?version=latest)](https://bot-python-sdk.readthedocs.io/en/latest/?badge=latest)
+[![Updates](https://pyup.io/repos/github/alinik/soroush_python_sdk/shield.svg)](https://pyup.io/repos/github/alinik/soroush_python_sdk/shield.svg)
 
 
 ## Dependencies ##

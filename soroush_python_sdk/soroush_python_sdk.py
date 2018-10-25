@@ -5,24 +5,26 @@ import requests
 import sseclient
 import json
 import os
+from time import sleep
 
 
 class Client:
+    HEADERS = {'Content-Type': 'Application/json', 'Accept': 'Application/json'}
+    BASE_URL = 'https://bot.sapp.ir/'
+    GET_MESSAGE_URL = '/getMessage'
+    SEND_MESSAGE_URL = '/sendMessage'
+    DOWNLOAD_FILE_URL = '/downloadFile/'
+    UPLOAD_FILE_URL = '/uploadFile'
+    RETRY_DELAY = 10
 
     def __init__(self, token):
-        self.base_url = 'https://bot.sapp.ir/'
-        self.get_message_url = '/getMessage'
-        self.send_message_url = '/sendMessage'
-        self.download_file_url = '/downloadFile/'
-        self.upload_file_url = '/uploadFile'
         self.token = token
-        self.retry_delay = 3
 
     def get_upload_file_url(self):
         if not self.token:
             raise ValueError('Invalid bot token')
 
-        return self.base_url + self.token + self.upload_file_url
+        return self.BASE_URL + self.token + self.UPLOAD_FILE_URL
 
     def get_download_file_url(self, file_url):
         if not self.token:
@@ -30,39 +32,41 @@ class Client:
         if not file_url:
             raise ValueError('Invalid file url')
 
-        return self.base_url + self.token + self.download_file_url + file_url
+        return self.BASE_URL + self.token + self.DOWNLOAD_FILE_URL + file_url
 
     def get_messages(self):
         if not self.token:
             raise ValueError('Invalid bot token')
 
-        url = self.base_url + self.token + self.get_message_url
+        url = self.BASE_URL + self.token + self.GET_MESSAGE_URL
 
-        response = requests.get(url, stream=True)
-        if 'Content-Type' in response.headers:
-            client = sseclient.SSEClient(response)
+        while True:
+            response = requests.get(url, stream=True)
+            if 'Content-Type' in response.headers:
+                client = sseclient.SSEClient(response)
 
-            for event in client.events():
-                try:
-                    message_event = json.loads(event.data)
-                    yield message_event
-                except Exception as e:
-                    print(e.args[0])
-                    continue
-        else:
-            raise ValueError('Invalid bot token')
+                for event in client.events():
+                    try:
+                        message_event = json.loads(event.data)
+                        yield message_event
+                    except Exception as e:
+                        print(e.args[0])
+                        continue
+            else:
+                print('Invalid bot token OR Invalid connection response from server')
+
+            sleep(self.RETRY_DELAY)
 
     def send_message(self, post_data):
         if not self.token:
             raise ValueError('Invalid bot token')
 
-        url = self.base_url + self.token + self.send_message_url
-        headers = {'Content-Type': 'Application/json', 'Accept': 'Application/json'}
+        url = self.BASE_URL + self.token + self.SEND_MESSAGE_URL
 
         post_data = json.dumps(post_data, separators=(',', ':'))
 
         try:
-            response = requests.post(url, post_data, headers=headers)
+            response = requests.post(url, post_data, headers=self.HEADERS)
 
             if response:
                 response_json = json.loads(response.text)
@@ -220,6 +224,7 @@ class Client:
         }
 
         return self.send_message(post_data)
+
     @staticmethod
     def make_keyboard(keyboard_data):
         keyboard = []
@@ -341,5 +346,3 @@ class Client:
                 return ['Bad Response: ' + str(response.status_code) + ' status code', False]
         except Exception as e:
             return [e.args[0], False]
-
-

@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+
+"""Main module."""
 import requests
 import sseclient
 import json

@@ -1,6 +1,5 @@
-from sys import path
-path.append('..')
-from client import Client
+from soroush_python_sdk import Client
+
 from os.path import getsize
 import ntpath
 

@@ -1,8 +1,7 @@
-from sys import path
-path.append('..')
-from client import Client
-from os.path import getsize
 import ntpath
+from os.path import getsize
+
+from soroush_python_sdk import Client
 
 bot_token = 'your bot token'
 

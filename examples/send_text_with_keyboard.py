@@ -1,7 +1,5 @@
-from sys import path
+from soroush_python_sdk import Client
 
-path.append('..')
-from client import Client
 
 bot_token = 'your bot token'
 

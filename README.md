@@ -1,6 +1,12 @@
 
 # Soroush Messenger Bot Python SDK
 Soroush Messenger Bot Wrapper for Python
+![shiled](https://img.shields.io/pypi/v/soroush_python_sdk.svg)
+![travis](https://img.shields.io/travis/alinik/soroush_python_sdk.svg)
+![aa](https://readthedocs.org/projects/soroush-python-sdk/badge/?version=latest)
+![Documentation Status](https://soroush-python-sdk.readthedocs.io/en/latest/?badge=latest)
+![Updates](https://pyup.io/repos/github/alinik/soroush_python_sdk/shield.svg)
+
 
 ## Dependencies ##
 - Python 2.7+
@@ -8,6 +14,10 @@ Soroush Messenger Bot Wrapper for Python
 - sseclient-py
 
 ## Installation ##
+```bash
+pip install soroush-python-sdk
+```
+
 Run the below commands
 ```bash
 git clone https://github.com/soroush-app/bot-python-sdk
@@ -18,7 +28,7 @@ pip install -r requirements.txt
 ## Usage ##
 
 ```python
-from client import Client
+from soroush_python_sdk import Client
 
 bot_token = 'your bot token'
 

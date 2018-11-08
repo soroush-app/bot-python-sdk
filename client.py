@@ -38,21 +38,31 @@ class Client:
         url = self.BASE_URL + self.token + self.GET_MESSAGE_URL
 
         while True:
-            response = requests.get(url, stream=True)
-            if 'Content-Type' in response.headers:
-                client = sseclient.SSEClient(response)
+            try:
+                response = requests.get(url, stream=True)
+                if 'Content-Type' in response.headers:
+                    client = sseclient.SSEClient(response)
 
-                for event in client.events():
-                    try:
-                        message_event = json.loads(event.data)
-                        yield message_event
-                    except Exception as e:
-                        print(e.args[0])
-                        continue
-            else:
-                print('Invalid bot token OR Invalid connection response from server')
+                    print('connected successfully\n')
 
-            sleep(self.RETRY_DELAY)
+                    for event in client.events():
+                        try:
+                            message_event = json.loads(event.data)
+                            yield message_event
+                        except Exception as e:
+                            print(e.args[0])
+                            continue
+                else:
+                    print('Invalid bot token OR Invalid connection response from server')
+
+                print('retry to connect after 10 seconds...')
+                sleep(self.RETRY_DELAY)
+
+            except Exception as e:
+                print(e.args[0])
+                print('retry to connect after 10 seconds...')
+                sleep(self.RETRY_DELAY)
+                continue
 
     def send_message(self, post_data):
         if not self.token:

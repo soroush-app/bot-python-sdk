@@ -231,6 +231,7 @@ class Client:
         }
 
         return self.send_message(post_data)
+
     @staticmethod
     def make_keyboard(keyboard_data):
         keyboard = []
@@ -340,7 +341,7 @@ class Client:
                                     return [False, response_json['fileUrl']]
                             return ["Unknown Upload Error", False]
                         else:
-                            if 'resulMessage' in response_json:
+                            if 'resultMessage' in response_json:
                                 return [response_json['resultMessage'], False]
                             else:
                                 return ['Unknown Error', False]

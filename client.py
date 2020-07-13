@@ -2,6 +2,7 @@ import requests
 import sseclient
 import json
 import os
+import sys
 from time import sleep
 
 
@@ -43,7 +44,7 @@ class Client:
                 if 'Content-Type' in response.headers:
                     client = sseclient.SSEClient(response)
 
-                    print('connected successfully\n')
+                    print('connected successfully\n', file=sys.stderr)
 
                     for event in client.events():
                         try:
@@ -53,14 +54,14 @@ class Client:
                             print(e.args[0])
                             continue
                 else:
-                    print('Invalid bot token OR Invalid connection response from server')
+                    print('Invalid bot token OR Invalid connection response from server', file=sys.stderr)
 
-                print('retry to connect after 10 seconds...')
+                print('retry to connect after 10 seconds...', file=sys.stderr)
                 sleep(self.RETRY_DELAY)
 
             except Exception as e:
-                print(e.args[0])
-                print('retry to connect after 10 seconds...')
+                print(e.args[0], file=sys.stderr)
+                print('retry to connect after 10 seconds...', file=sys.stderr)
                 sleep(self.RETRY_DELAY)
                 continue
 
@@ -76,21 +77,21 @@ class Client:
             response = requests.post(url, post_data, headers=self.HEADERS)
 
             if response:
-                response_json = json.loads(response.text)
+                response_json = response.json()
                 if 'resultCode' in response_json:
                     if response_json['resultCode'] == 200:
-                        return [False, 'OK']
+                        return (False, 'OK')
                     else:
                         if 'resultMessage' in response_json:
-                            return [response_json['resultMessage'], False]
+                            return (response_json['resultMessage'], False)
                         else:
-                            return ['Unknown Error', False]
+                            return ('Unknown Error', False)
                 else:
-                    return ['Invalid Response', False]
+                    return ('Invalid Response', False)
             else:
-                return ['Invalid Request', False]
+                return ('Invalid Request', False)
         except Exception as e:
-            return [e.args[0], False]
+            return (e.args[0], False)
 
     def send_text(self, to, text, keyboard=None):
 
@@ -310,18 +311,18 @@ class Client:
 
             if response.status_code == 200:
                 try:
-                    response_json = json.loads(response.text)
-                    return [response_json['resultMessage'], False]
+                    response_json = response.json()
+                    return (response_json['resultMessage'], False)
                 except:
                     pass
                 with open(save_file_path, 'wb') as file:
                     file.write(response.content)
-                return [False, save_file_path]
+                return (False, save_file_path)
             else:
-                return ['Bad Response: ' + str(response.status_code) + ' status code', False]
+                return (f'Bad Response: {response.status_code} status code', False)
 
         except Exception as e:
-            return [e.args[0], False]
+            return (e.args[0], False)
 
     def upload_file(self, file_path):
         if not os.path.isfile(file_path):
@@ -333,23 +334,23 @@ class Client:
 
             if response.status_code == 200:
                 if response:
-                    response_json = json.loads(response.text)
+                    response_json = response.json()
                     if 'resultCode' in response_json:
                         if response_json['resultCode'] == 200:
                             if 'fileUrl' in response_json:
                                 if response_json['fileUrl']:
-                                    return [False, response_json['fileUrl']]
-                            return ["Unknown Upload Error", False]
+                                    return (False, response_json['fileUrl'])
+                            return ("Unknown Upload Error", False)
                         else:
                             if 'resultMessage' in response_json:
-                                return [response_json['resultMessage'], False]
+                                return (response_json['resultMessage'], False)
                             else:
-                                return ['Unknown Error', False]
+                                return ('Unknown Error', False)
                     else:
-                        return ["Invalid Response", False]
+                        return ("Invalid Response", False)
                 else:
-                    return ["Bad Response", False]
+                    return ("Bad Response", False)
             else:
-                return ['Bad Response: ' + str(response.status_code) + ' status code', False]
+                return (f'Bad Response: {response.status_code} status code', False)
         except Exception as e:
-            return [e.args[0], False]
+            return (e.args[0], False)

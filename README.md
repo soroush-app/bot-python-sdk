@@ -6,6 +6,7 @@ Soroush Messenger Bot Wrapper for Python
 - Python 2.7+
 - requests 
 - sseclient-py
+- requests_toolbelt
 
 ## Installation ##
 Run the below commands

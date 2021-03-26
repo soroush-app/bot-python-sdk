@@ -3,7 +3,7 @@ import sseclient
 import json
 import os
 from time import sleep
-
+from requests_toolbelt import MultipartEncoder
 
 class Client:
     HEADERS = {'Content-Type': 'Application/json', 'Accept': 'Application/json'}

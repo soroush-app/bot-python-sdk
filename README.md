@@ -2,12 +2,6 @@
 # Soroush Messenger Bot Python SDK
 Soroush Messenger Bot Wrapper for Python
 
-## Dependencies ##
-- Python 2.7+
-- requests 
-- sseclient-py
-- requests_toolbelt
-
 ## Installation ##
 Run the below commands
 ```bash
@@ -19,11 +13,11 @@ pip install -r requirements.txt
 ## Usage ##
 
 ```python
-from client import Client
+from SoroushBot import SoroushBot
 
 bot_token = 'your bot token'
 
-bot = Client(bot_token)
+bot = SoroushBot(bot_token)
 
 try:
     to = 'user chat_id'
@@ -42,6 +36,7 @@ except Exception as e:
 ```
 "to" value in above example is chat_id of a bot user. You can find it in front of 'from' key in a message that user has sent to your bot. 
 You can see more examples in the [examples](https://github.com/soroush-app/bot-python-sdk/tree/master/examples) directory.
+use [SoroushBot](https://github.com/Mahdiali313/bot-python-sdk/blob/master/SoroushBot.py) function becuase it's easier to use!
 
  ## Contribute ##
  Contributions to the package are always welcome!

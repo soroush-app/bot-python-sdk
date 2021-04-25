@@ -15,5 +15,5 @@ to = 'user chat_id'
                    )
 
 if error:
-    print('error in sending video: {}' .format(error))
+    print('error in sending Location: {}' .format(error))
 

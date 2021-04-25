@@ -1,6 +1,9 @@
 
 # Soroush Messenger Bot Python SDK
-Soroush Messenger Bot Wrapper for Python
+
+Use SoroushBot.py to send video ,image and file easier ! 
+
+if you can ,please help us to complete this script (SoroushBot.py) .
 
 ## Installation ##
 Run the below commands

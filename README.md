@@ -22,7 +22,7 @@ bot = SoroushBot(bot_token)
 try:
     to = 'user chat_id'
 
-    [error, success] = bot.send_text(to, 'Your text')
+    [error, success] = bot.sendText(to, 'Your text')
 
     if success:
         print('Message sent successfully')

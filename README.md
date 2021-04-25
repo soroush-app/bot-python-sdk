@@ -31,9 +31,9 @@ if success:
 ```
 "to" value in above example is chat_id of a bot user. You can find it in front of 'from' key in a message that user has sent to your bot. 
 You can see more examples in the [examples](https://github.com/soroush-app/bot-python-sdk/tree/master/examples) directory.
+
 use [SoroushBot](https://github.com/Mahdiali313/bot-python-sdk/blob/master/SoroushBot.py) function becuase it's easier to use!
 
  ## Contribute ##
  Contributions to the package are always welcome!
  - Report any idea, bugs or issues you find on the [issue tracker](https://github.com/soroush-app/bot-python-sdk/issues).
- - You can grab the source code at the package's [Git repository](https://github.com/soroush-app/bot-python-sdk.git).

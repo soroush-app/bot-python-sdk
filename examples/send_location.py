@@ -1,20 +1,19 @@
 from sys import path
 path.append('..')
-from client import Client
+from SoroushBot import SoroushBot
 
 bot_token = 'your bot token'
+bot = SoroushBot(bot_token)
 
-bot = Client(bot_token)
+to = 'user chat_id'
 
-try:
-    to = 'user chat_id'
+[error, success] = bot.sendLocation(
+                        target_id = to,
+                        latitude =  35.7448416,
+                        longitude = 51.3753212 ,
+                        caption='Your Caption'
+                   )
 
-    [error, success] = bot.send_location(to, 35.7448416, 51.3753212)
+if error:
+    print('error in sending video: {}' .format(error))
 
-    if success:
-        print('Message sent successfully')
-    else:
-        print('Sending message failed: {}' .format(error))
-
-except Exception as e:
-    print(e.args[0])

@@ -88,3 +88,18 @@ class SoroushBot:
         resualt=b.send_location(target_id, latitude, longitude, caption, keyboard)
 
         return resualt
+    
+    def sendAudio (self, target_id, audio_path, caption, audio_duration):
+        audioUrl=b.upload_file(audio_path)
+        
+        audiotype = 'PUSH_TO_TALK'
+        extra_params = {
+            'fileDuration': audio_duration*1000
+        }
+
+        resualt = b.send_file(target_id, caption,
+                                 ntpath.basename(audio_path), audiotype,
+                                 audioUrl[1], getsize(audio_path),
+                                extra_params)
+
+        return resualt

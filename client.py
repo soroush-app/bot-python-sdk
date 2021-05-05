@@ -325,11 +325,16 @@ class Client:
 
     def upload_file(self, file_path):
         if not os.path.isfile(file_path):
-            raise ValueError('Invalid file')
-
-        try:
-            file = {'file': open(file_path, 'rb')}
-            response = requests.post(self.get_upload_file_url(), files=file)
+            raise ValueError('Invalid file (file with this name not exit or maybe remove or incorrect path you given)')	
+        try:	
+            session = requests.Session()	
+            with open(file_path, "rb") as f:	
+                m = MultipartEncoder({	
+                    'file':(file_path.split('/')[-1],f,"application/octet-stream")	
+                })	
+                headers = {"Content-Type": m.content_type}	
+                response = session.post(self.get_upload_file_url(),headers=headers, data=m)	
+            session.close()
 
             if response.status_code == 200:
                 if response:

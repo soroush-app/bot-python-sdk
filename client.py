@@ -92,21 +92,23 @@ class Client:
         except Exception as e:
             return [e.args[0], False]
 
-    def send_text(self, to, text,sendTochannel=0, keyboard=None):
-        '''if you set sendTochannel =1 ,it will send message to channel
-        (give id of channel without @ )'''
+    def send_text(self, to, text,sendTochannel=False, keyboard=None):
+        '''if you set sendTochannel =True ,it will send message to channel
+        (to=id of channel without @ )'''
         post_data = {
             'type': 'TEXT',
             'to': to,
             'body': text,
         }
-        if sendTochannel == 1 :
+        if sendTochannel == True :
             post_data['majorType']="CHANNEL"
         if keyboard is not None:
             post_data['keyboard'] = keyboard
         return self.send_message(post_data)
 
-    def send_file(self, to, body, file_name, file_type, file_url, file_size, extra_params={}):
+    def send_file(self, to, body, file_name, file_type, file_url, file_size, extra_params={},sendTochannel=False):
+        '''if you set sendTochannel =True ,it will send message to channel
+        (to=id of channel without @ )'''
         post_data = {
             'to': to,
             'body': body,
@@ -116,22 +118,26 @@ class Client:
             'fileUrl': file_url,
             'fileSize': file_size
         }
-
+        if sendTochannel == True :
+            post_data['majorType']="CHANNEL"
         for key, value in extra_params.items():
             post_data[key] = value
 
         return self.send_message(post_data)
 
     def send_image(self, to, image_file_url, image_file_name, image_file_size, image_width=0,
-                   image_height=0, thumbnail_file_url=None, caption='', keyboard=None):
+                   image_height=0, thumbnail_file_url=None, caption='',sendTochannel=False, keyboard=None):
 
+        '''if you set sendTochannel =True ,it will send message to channel
+        (to=id of channel without @ )'''
         image_file_type = 'IMAGE'
         extra_params = {
             'imageWidth': 0,
             'imageHeight': 0,
             'thumbnailUrl': ''
         }
-
+        if sendTochannel == True :
+            extra_params['majorType']="CHANNEL"
         if int(image_width) and int(image_height):
             extra_params['imageWidth'] = int(image_width)
             extra_params['imageHeight'] = int(image_height)
@@ -144,15 +150,18 @@ class Client:
                               extra_params)
 
     def send_gif(self, to, image_file_url, image_file_name, image_file_size, image_width=0,
-                 image_height=0, thumbnail_file_url=None, caption='', keyboard=None):
+                 image_height=0, thumbnail_file_url=None, caption='',sendTochannel=False, keyboard=None):
 
+        '''if you set sendTochannel =True ,it will send message to channel
+        (to=id of channel without @ )'''
         gif_file_type = 'GIF'
         extra_params = {
             'imageWidth': 0,
             'imageHeight': 0,
             'thumbnailUrl': ''
         }
-
+        if sendTochannel == True :
+            extra_params['majorType']="CHANNEL"
         if int(image_width) and int(image_height):
             extra_params['imageWidth'] = int(image_width)
             extra_params['imageHeight'] = int(image_height)
@@ -165,8 +174,10 @@ class Client:
                               extra_params)
 
     def send_video(self, to, video_file_url, video_file_name, video_file_size, video_duration_in_milliseconds,
-                   video_width=0, video_height=0, thumbnail_file_url=None, caption='', keyboard=None):
+                   video_width=0, video_height=0, thumbnail_file_url=None, caption='',sendTochannel=False, keyboard=None):
 
+        '''if you set sendTochannel =True ,it will send message to channel
+        (to=id of channel without @ )'''
         video_file_type = 'VIDEO'
         extra_params = {
             'thumbnailWidth': 0,
@@ -175,6 +186,8 @@ class Client:
             'fileDuration': video_duration_in_milliseconds
         }
 
+        if sendTochannel == True :
+            extra_params['majorType']="CHANNEL"
         if int(video_width) and int(video_height):
             extra_params['imageWidth'] = int(video_width)
             extra_params['imageHeight'] = int(video_height)
@@ -187,21 +200,26 @@ class Client:
                               extra_params)
 
     def send_voice(self, to, voice_file_url, voice_file_name, voice_file_size, voice_duration_in_milliseconds,
-                   caption='', keyboard=None):
+                   caption='',sendTochannel=False, keyboard=None):
 
+        '''if you set sendTochannel =True ,it will send message to channel
+        (to=id of channel without @ )'''
         voice_file_type = 'PUSH_TO_TALK'
         extra_params = {
             'fileDuration': voice_duration_in_milliseconds
         }
 
+        if sendTochannel == True :
+            extra_params['majorType']="CHANNEL"
         if keyboard is not None:
             extra_params['keyboard'] = keyboard
 
         return self.send_file(to, caption, voice_file_name, voice_file_type, voice_file_url, voice_file_size,
                               extra_params)
 
-    def send_location(self, to, latitude, longitude, caption='', keyboard=None):
-
+    def send_location(self, to, latitude, longitude, caption='',sendTochannel=False, keyboard=None):
+        '''if you set sendTochannel =True ,it will send message to channel
+        (to=id of channel without @ )'''
         post_data = {
             'type': 'LOCATION',
             'latitude': latitude,
@@ -209,17 +227,22 @@ class Client:
             'to': to,
             'body': caption
         }
-
+        
+        if sendTochannel == True :
+            post_data['majorType']="CHANNEL"
         if keyboard is not None:
             post_data['keyboard'] = keyboard
 
         return self.send_message(post_data)
 
-    def send_attachment(self, to, file_url, file_name, file_size, caption='', keyboard=None):
-
+    def send_attachment(self, to, file_url, file_name, file_size, caption='',sendTochannel=False, keyboard=None):
+        '''if you set sendTochannel =True ,it will send message to channel
+        (to=id of channel without @ )'''
         file_type = 'ATTACHMENT'
         extra_params = {}
 
+        if sendTochannel == True :
+            extra_params['majorType']="CHANNEL"
         if keyboard is not None:
             extra_params['keyboard'] = keyboard
 
@@ -328,15 +351,16 @@ class Client:
 
     def upload_file(self, file_path):
         if not os.path.isfile(file_path):
-            raise ValueError('Invalid file (file with this name not exit or maybe remove or incorrect path you given)')	
-        try:	
-            session = requests.Session()	
-            with open(file_path, "rb") as f:	
-                m = MultipartEncoder({	
-                    'file':(file_path.split('/')[-1],f,"application/octet-stream")	
-                })	
-                headers = {"Content-Type": m.content_type}	
-                response = session.post(self.get_upload_file_url(),headers=headers, data=m)	
+            raise ValueError('Invalid file (file with this name not exit or maybe remove or incorrect path you given)')
+
+        try:
+            session = requests.Session()
+            with open(file_path, "rb") as f:
+                m = MultipartEncoder({
+                    'file':(file_path.split('/')[-1],f,"application/octet-stream")
+                })
+                headers = {"Content-Type": m.content_type}
+                response = session.post(self.get_upload_file_url(),headers=headers, data=m)
             session.close()
 
             if response.status_code == 200:

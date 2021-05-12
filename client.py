@@ -92,13 +92,16 @@ class Client:
         except Exception as e:
             return [e.args[0], False]
 
-    def send_text(self, to, text, keyboard=None):
-
+    def send_text(self, to, text,sendTochannel=0, keyboard=None):
+        '''if you set sendTochannel =1 ,it will send message to channel
+        (give id of channel without @ )'''
         post_data = {
             'type': 'TEXT',
             'to': to,
             'body': text,
         }
+        if sendTochannel == 1 :
+            post_data['majorType']="CHANNEL"
         if keyboard is not None:
             post_data['keyboard'] = keyboard
         return self.send_message(post_data)

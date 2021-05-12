@@ -27,9 +27,15 @@ to = 'user chat_id'
 [error, success] = bot.sendText(to, 'Your text')
 
 if success:
-    print('Message sent successfully')
+    print('Message sent successfully to user')
 
 
+channelid = 'channel id without @'
+
+[error, success] = bot.sendText(channelid, 'Your text',isSendToChannel=True)
+
+if success:
+    print('Message sent successfully to channel')
 
 ```
 "to" value in above example is chat_id of a bot user. You can find it in front of 'from' key in a message that user has sent to your bot. 

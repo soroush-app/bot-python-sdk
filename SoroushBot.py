@@ -10,8 +10,8 @@ class SoroushBot:
         global b
         b= Client(bot_token)
 
-    def sendText(self,target_id,caption):
-        resualt=b.send_text(target_id,caption)
+    def sendText(self,target_id,caption,isSendToChannel=False):
+        resualt=b.send_text(target_id,caption,isSendToChannel)
         #resualt=[error,success]
         return resualt
         
@@ -21,7 +21,7 @@ class SoroushBot:
         height = int(round(clip.h))
         return [width,height]
 
-    def sendImage(self,target_id,image_path,image_thumbnail_path,caption):
+    def sendImage(self,target_id,image_path,image_thumbnail_path,caption,isSendToChannel=False):
         rImage=b.upload_file(image_path)
         #rImage=[image_error, image_url]
 
@@ -34,7 +34,7 @@ class SoroushBot:
                                           ntpath.basename(image_path),
                                           getsize(image_path), scale[0], scale[1],
                                           rThumb[1],
-                                          caption)
+                                          caption,isSendToChannel)
             #if(resualt[1] != 'OK'):
             #    print("paramets that gotten this function",image_path,image_thumbnail_path,caption)            
             return resualt
@@ -45,7 +45,7 @@ class SoroushBot:
             return rImage
 
 
-    def sendVideo(self,target_id,video_path,video_thumbnail_path,caption,durationSeconds=None):
+    def sendVideo(self,target_id,video_path,video_thumbnail_path,caption,durationSeconds=None,isSendToChannel=False):
         rVideo=b.upload_file(video_path)
         #rVideo=[video_error, video_url]
 
@@ -64,7 +64,7 @@ class SoroushBot:
                                     getsize(video_path),
                                           durationSeconds*1000, scale[0], scale[1],
                                           rThumb[1],
-                                          caption)
+                                          caption,isSendToChannel)
             #if(resualt[1] != 'OK'):
             #    print("paramets that gotten this func",video_path,video_thumbnail_path,caption,durationSeconds)
             return resualt
@@ -75,21 +75,21 @@ class SoroushBot:
             return rVideo
 
 
-    def sendFile(self,target_id,file_path,caption):
+    def sendFile(self,target_id,file_path,caption,isSendToChannel=False):
         rFile = b.upload_file(file_path)
         #rFile=[error, file_url]
 
         resualt = b.send_attachment(target_id, rFile[1], ntpath.basename(file_path),
                                             getsize(file_path),
-                                            caption)
+                                            caption,isSendToChannel)
         return resualt
 
-    def sendLocation(self,target_id, latitude, longitude, caption='', keyboard=None):
-        resualt=b.send_location(target_id, latitude, longitude, caption, keyboard)
+    def sendLocation(self,target_id, latitude, longitude, caption='', keyboard=None,isSendToChannel=False):
+        resualt=b.send_location(target_id, latitude, longitude, caption, keyboard,isSendToChannel)
 
         return resualt
     
-    def sendAudio (self, target_id, audio_path, caption, audio_duration):
+    def sendAudio (self, target_id, audio_path, caption, audio_duration,isSendToChannel=False):
         audioUrl=b.upload_file(audio_path)
         
         audiotype = 'PUSH_TO_TALK'
@@ -100,6 +100,6 @@ class SoroushBot:
         resualt = b.send_file(target_id, caption,
                                  ntpath.basename(audio_path), audiotype,
                                  audioUrl[1], getsize(audio_path),
-                                extra_params)
+                                extra_params,isSendToChannel)
 
         return resualt

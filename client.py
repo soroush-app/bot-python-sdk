@@ -1,5 +1,4 @@
 import requests
-import sseclient
 import json
 import os
 from time import sleep
@@ -39,25 +38,16 @@ class Client:
 
         while True:
             try:
-                response = requests.get(url, stream=True)
-                if 'Content-Type' in response.headers:
-                    client = sseclient.SSEClient(response)
-
-                    print('connected successfully\n')
-
-                    for event in client.events():
-                        try:
-                            message_event = json.loads(event.data)
-                            yield message_event
-                        except Exception as e:
-                            print(e.args[0])
-                            continue
-                else:
-                    print('Invalid bot token OR Invalid connection response from server')
-
-                print('retry to connect after 10 seconds...')
-                sleep(self.RETRY_DELAY)
-
+                session = requests.Session()
+                with session.get(url, headers=None, stream=True) as resp:
+                    for line in resp.iter_lines():
+                        if line:
+                            try:
+                                message_event = json.loads(line.decode("utf-8")[5::])["body"]
+                                yield message_event
+                            except Exception as e:
+                                    print(e.args[0])
+                                    continue
             except Exception as e:
                 print(e.args[0])
                 print('retry to connect after 10 seconds...')

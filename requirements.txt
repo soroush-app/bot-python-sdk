@@ -1,2 +1,4 @@
 requests
 sseclient-py
+requests_toolbelt
+moviepy

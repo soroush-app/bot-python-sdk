@@ -6,14 +6,13 @@ bot_token = 'your bot token'
 bot = SoroushBot(bot_token)
 
 to = 'user chat_id'
+path = 'your file path'
 
-[error, success] = bot.sendLocation(
+[error, success] = bot.sendFile(
                         target_id = to,
-                        latitude =  35.7448416,
-                        longitude = 51.3753212 ,
+                        file_path = path,
                         caption='Your Caption'
                    )
 
 if error:
-    print('error in sending Location: {}' .format(error))
-
+    print('error in sending file: {}' .format(error))

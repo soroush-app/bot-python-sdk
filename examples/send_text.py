@@ -1,20 +1,14 @@
 from sys import path
 path.append('..')
-from client import Client
+from SoroushBot import SoroushBot
 
 bot_token = 'your bot token'
 
-bot = Client(bot_token)
+bot = SoroushBot(bot_token)
 
-try:
-    to = 'user chat_id'
+to = 'user chat_id'
 
-    [error, success] = bot.send_text(to, 'Your text')
+[error, success] = bot.sendText(to, 'Your text')
 
-    if success:
-        print('Message sent successfully')
-    else:
-        print('Sending message failed: {}' .format(error))
-
-except Exception as e:
-    print(e.args[0])
+if error:
+    print('Sending message failed: {}' .format(error))

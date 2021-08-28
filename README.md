@@ -8,11 +8,19 @@ Soroush Messenger Bot Wrapper for Python
 - sseclient-py
 
 ## Installation ##
-Run the below commands
+Use git (first make sure it's installed on your os) then run the below commands:
+*if you'r not using 'git' just download zip file from above and extract it*
 ```bash
 git clone https://github.com/soroush-app/bot-python-sdk
 cd bot-python-sdk
+```
+then run below command (where you see 'requirements.txt' file):
+```bash
 pip install -r requirements.txt
+```
+OR:
+```bash
+python3 -m pip install -r requirements.txt
 ```
 
 ## Usage ##

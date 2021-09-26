@@ -1,4 +1,5 @@
 import requests
+from requests_toolbelt.multipart.encoder import MultipartEncoder
 import sseclient
 import json
 import os
@@ -328,8 +329,14 @@ class Client:
             raise ValueError('Invalid file')
 
         try:
-            file = {'file': open(file_path, 'rb')}
-            response = requests.post(self.get_upload_file_url(), files=file)
+            session = requests.Session()
+            with open(file_path, "rb") as f:
+                m = MultipartEncoder({
+                    'file':(file_path.split('/')[-1],f,"application/octet-stream")
+                })
+                headers = {"Content-Type": m.content_type}
+                response = session.post(self.get_upload_file_url(),headers=headers, data=m)
+            session.close()
 
             if response.status_code == 200:
                 if response:
